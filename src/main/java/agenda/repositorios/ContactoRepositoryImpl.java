@@ -43,4 +43,17 @@ public class ContactoRepositoryImpl implements ContactoRepository {
     public void eliminar(Long id) {
         contactos.remove(id);
     }
+
+    @Override
+    public Contacto actualizar(Long id, Contacto contacto) {
+        // Si no existe, devolvemos null
+        if (!contactos.containsKey(id)) {
+            return null;
+        }
+
+        // Actualizamos los datos
+        contacto.setId(id);
+        contactos.put(id, contacto);
+        return contacto;
+    }
 }
