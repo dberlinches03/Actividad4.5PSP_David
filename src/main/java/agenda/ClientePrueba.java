@@ -30,16 +30,17 @@ public class ClientePrueba {
         obtenerContactoPorId(nuevoContacto.getId());
 
 
+        // Modificar contacto
+        nuevoContacto.setTelefono("111222333");
+        Contacto modificado = modificarContacto(nuevoContacto.getId(), nuevoContacto);
+        System.out.println("Contacto modificado: " + modificado);
+
+
         // Elimina un contacto por ID
         eliminarContacto(nuevoContacto.getId());
 
         // Obtiene todos los contactos después de la eliminación
         listarContactos();
-
-        // Modificar contacto
-        nuevoContacto.setTelefono("111222333");
-        Contacto modificado = modificarContacto(nuevoContacto.getId(), nuevoContacto);
-        System.out.println("Contacto modificado: " + modificado);
 
         // Después de modificar
         listarContactos();
