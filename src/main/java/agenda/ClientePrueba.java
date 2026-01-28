@@ -35,6 +35,14 @@ public class ClientePrueba {
 
         // Obtiene todos los contactos después de la eliminación
         listarContactos();
+
+        // Modificar contacto
+        nuevoContacto.setTelefono("111222333");
+        Contacto modificado = modificarContacto(nuevoContacto.getId(), nuevoContacto);
+        System.out.println("Contacto modificado: " + modificado);
+
+        // Después de modificar
+        listarContactos();
     }
 
     private Contacto agregarContacto(Contacto contacto) {
@@ -72,6 +80,7 @@ public class ClientePrueba {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+
         HttpEntity<Contacto> requestEntity = new HttpEntity<>(contacto, headers);
 
         ResponseEntity<Contacto> response = restTemplate.exchange(BASE_URL + "/" + id, HttpMethod.PUT, requestEntity, Contacto.class);

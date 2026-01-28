@@ -35,6 +35,10 @@ public class Contacto {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Contacto{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                '}';
     }
 }
