@@ -9,4 +9,6 @@ public interface ContactoRepository {
     Contacto obtenerPorId(Long id);
     Contacto guardar(Contacto contacto);
     void eliminar(Long id);
+
+    Contacto actualizar(Long id, Contacto contacto);
 }
