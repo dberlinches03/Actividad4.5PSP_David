@@ -9,4 +9,7 @@ public interface ContactoService {
     Contacto obtenerPorId(Long id);
     Contacto guardar(Contacto contacto);
     void eliminar(Long id);
+
+    // Nuevo método
+    Contacto actualizar(Long id, Contacto contacto);
 }
