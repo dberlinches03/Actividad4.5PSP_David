@@ -37,4 +37,9 @@ public class ContactoController {
     public void eliminar(@PathVariable Long id) {
         contactoService.eliminar(id);
     }
+    @PutMapping("/{id}")
+    public Contacto actualizar(@PathVariable Long id, @RequestBody Contacto contacto) {
+        // Llamamos al servicio para actualizar
+        return contactoService.actualizar(id, contacto);
+    }
 }
