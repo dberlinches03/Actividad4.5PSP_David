@@ -1,5 +1,6 @@
 package agenda.seguridad;
 
+import agenda.entidades.Usuario;
 import io.jsonwebtoken.*;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +35,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 replace(TOKEN_BEARER_PREFIX, "");
 
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey(SUPER_SECRETE_KEY))
+                .setSigningKey(getSigningKey(SUPER_SECRET_KEY))
                 .build()
                 .parseClaimsJws(jwtToken)
                 .getBody();
@@ -78,18 +80,20 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Configuration
     static
     class WebSecurityConfig{
-
         @Autowired
         JWTAuthorizationFilter jwtAuthorizationFilter;
-
         @Bean
-        public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-            http.csrf((csrf) -> csrf
-                    .disable())
-                    .authorizeHttpRequests(authz -> authz
-                            .requestMatchers(HttpMethod.POST, Constans.LOGIN_URL).permitAll()
+        public SecurityFilterChain configure(HttpSecurity http) throws
+                Exception {
+            http
+                    .csrf(AbstractHttpConfigurer::disable)
+                    .authorizeHttpRequests( authz -> authz
+                            .requestMatchers(HttpMethod.POST,Constans.LOGIN_URL).permitAll()
+                            .requestMatchers(HttpMethod.DELETE,
+                                    "/contactos/**").hasAuthority("ROLE_" + Usuario.Rol.ADMIN)
                             .anyRequest().authenticated())
-                    .addFilterAfter(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                    .addFilterAfter(jwtAuthorizationFilter,
+                            UsernamePasswordAuthenticationFilter.class);
             return http.build();
         }
     }
