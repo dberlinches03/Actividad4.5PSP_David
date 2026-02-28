@@ -15,6 +15,10 @@ public class UsuarioRepository {
                 PasswordEncryptor.encrypt("1234"), Usuario.Rol.ADMIN));
         usuarios.add(new Usuario("alicia",
                 PasswordEncryptor.encrypt("1111"), Usuario.Rol.USER));
+
+        // Nuevo usuario para las pruebas
+        usuarios.add(new Usuario("invitado",
+                PasswordEncryptor.encrypt("guest123"), Usuario.Rol.GUEST));
         return usuarios;
     }
 }
