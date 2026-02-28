@@ -38,7 +38,8 @@ public class Usuario {
 
     public enum Rol {
         ADMIN("ADMIN"),
-        USER("USER");
+        USER("USER"),
+        GUEST("GUEST");
         private final String rol;
         Rol(String rol) {
             this.rol = rol;

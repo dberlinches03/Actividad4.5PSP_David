@@ -88,7 +88,16 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             http
                     .csrf(AbstractHttpConfigurer::disable)
                     .authorizeHttpRequests( authz -> authz
+                            // 1. Permitir login a todos
                             .requestMatchers(HttpMethod.POST,Constans.LOGIN_URL).permitAll()
+                            // 2. Restricciones para GUEST: Solo GET
+                            .requestMatchers(HttpMethod.GET, "/contactos/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER", "ROLE_GUEST")
+
+                            //3. Restricciones de escritura: Solo ADMIN y USER
+                            .requestMatchers(HttpMethod.POST, "/contactos/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+                            .requestMatchers(HttpMethod.PUT, "/contactos/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
+
+                            // 4. Restricción de borrado: Solo Admin
                             .requestMatchers(HttpMethod.DELETE,
                                     "/contactos/**").hasAuthority("ROLE_" + Usuario.Rol.ADMIN)
                             .anyRequest().authenticated())
